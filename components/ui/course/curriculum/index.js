@@ -9,7 +9,9 @@ const lectures = [
   "Safe operator",
 ];
 
-const Curriculum = () => {
+const Curriculum = ({ locked }) => {
+  const statusClass =
+    "px-2 inline-flex text-xs leading-5 font-semibold rounded-full";
   return (
     <section className="max-w-5xl mx-auto">
       <div className="flex flex-col">
@@ -49,8 +51,14 @@ const Curriculum = () => {
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                          Unlocked
+                        <span
+                          className={
+                            locked
+                              ? `bg-green-100 text-green-800 ${statusClass}`
+                              : `bg-red-100 text-red-800 ${statusClass}`
+                          }
+                        >
+                          {locked ? "Locked" : "Unlocked"}
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

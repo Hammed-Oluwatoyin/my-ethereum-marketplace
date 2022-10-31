@@ -1,7 +1,12 @@
 import React from "react";
 import Link from "next/link";
+import { useWeb3 } from "@components/providers";
+import { Button } from "@components/ui/common";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
+  const { connect, isLoading, isWeb3Loaded } = useWeb3();
+  const router = useRouter();
   return (
     <section>
       <div className="relative pt-6 px-4 sm:px-6 lg:px-8">
@@ -27,14 +32,25 @@ const Navbar = () => {
             <div>
               <Link href="/">
                 <a className="font-medium mr-8 text-gray-500 hover:text-gray-900">
-                  Company
+                  Wishlist
                 </a>
               </Link>
-              <Link href="/">
-                <a className="font-medium mr-8 text-indigo-600 hover:text-indigo-500">
-                  Log in
-                </a>
-              </Link>
+
+              {isLoading ? (
+                <Button disabled={true} onClick={connect}>
+                  Loading...
+                </Button>
+              ) : isWeb3Loaded ? (
+                <Button onClick={connect}>Connect</Button>
+              ) : (
+                <Button
+                  onClick={() =>
+                    router.push("https://metamask.io/download.html")
+                  }
+                >
+                  Install Metamask
+                </Button>
+              )}
             </div>
           </div>
         </nav>
